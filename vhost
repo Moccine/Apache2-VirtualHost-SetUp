@@ -1,0 +1,48 @@
+####################################
+##Creation Vhost moccinodesign.com/
+####################################
+
+sudo mkdir -p /home/$USER/Dev-www/moccinodesign.com/public
+sudo chown -R $USER:$USER /home/$USER/Dev-www/moccinodesign.com/public
+sudo chmod -R 755 /var/www
+sudo gedit /home/$USER/Dev-www/moccinodesign.com/public/index.php
+sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/moccinodesign.com.conf
+sudo gedit /etc/apache2/sites-available/moccinodesign.com.conf
+---------------------------------------------------------------------- --------------------------------------------------
+##############################################
+##contenu du fichier moccinodesign.com.conf
+##############################################
+
+<VirtualHost *:80>
+    ServerName moccinodesign.com
+    ServerAdmin admin@moccinodesign.com
+    ServerAlias *moccinodesign.com
+    Options  FollowSymLinks
+    DocumentRoot /var/www/moccinodesign.com
+    ErrorLog ${APACHE_LOG_DIR}/error-moccinodesign.com.log
+    CustomLog ${APACHE_LOG_DIR}/access-moccinodesign.com.log combined
+
+ 	<Directory /home/$USER/Dev-www/moccinodesign.com/public>
+		AllowOverride All
+		Order deny,allow
+		Deny from all
+		Allow from 127.0.0.1            # Local
+	</Directory>
+</VirtualHost>
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+----------------------------------------------------------------------------------------------------------------------------
+sudo ln -s  /home/$USER/Dev-www/moccinodesign.com/public  /var/www/moccinodesign.com
+sudo gedit /etc/hosts
+sudo a2dissite 000-default.conf
+sudo gedit /etc/apache2/sites-available/sfqdn.conf
+--------------------------------------------------------------------------
+####################################
+##contenu du fichier sfqdn.conf
+####################################
+Servername localhost
+--------------------------------------------------------------------------
+sudo a2ensite sfqdn.conf
+sudo a2ensite moccinodesign.com.conf
+sudo apache2ctl -t
+sudo apache2ctl -k graceful
+#visiter le site http://moccinodesign.com
