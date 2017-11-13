@@ -30,9 +30,13 @@ sudo gedit /etc/apache2/sites-available/moccinodesign.com.conf
 	</Directory>
 </VirtualHost>
 # vim: syntax=apache ts=4 sw=4 sts=4 sr noet
-----------------------------------------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------
+# creation de lien symbolique
 sudo ln -s  /home/$USER/Dev-www/moccinodesign.com/public  /var/www/moccinodesign.com
+
+#editer le vhost et ajouter la ligne 127.0.1.1  moccinodesign.com
 sudo gedit /etc/hosts
+
 sudo a2dissite 000-default.conf
 sudo gedit /etc/apache2/sites-available/sfqdn.conf
 --------------------------------------------------------------------------
